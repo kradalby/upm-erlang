@@ -18,7 +18,11 @@ new_account(Bank, AccountNumber) ->
     Bank ! {new, AccountNumber, self()}.
 
 withdraw_money(Bank, AccountNumber, Amount) ->
-    Bank ! {withdraw, AccountNumber, Amount, self()}.
+    Bank ! {withdraw, AccountNumber, Amount, self()},
+    receive
+        {withdraw, N} -> N
+    end.
+
 
 deposit_money(Bank, AccountNumber, Amount) ->
     Bank ! {deposit, AccountNumber, Amount, self()}.
@@ -39,7 +43,7 @@ bank_instance(Accounts) ->
         {new, AccountNumber, Pid} -> bank_instance(new(Accounts, AccountNumber, Pid));
         {withdraw, AccountNumber, Amount, Pid} ->
             {NewAccounts, NewAmount} = withdraw(Accounts, AccountNumber, Amount),
-            Pid ! NewAmount,
+            Pid ! {withdraw, NewAmount},
             bank_instance(NewAccounts);
         {deposit, AccountNumber, Amount, Pid} ->
             {NewAccounts, NewAmount} = deposit(Accounts, AccountNumber, Amount),
