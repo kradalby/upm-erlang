@@ -1,0 +1,2 @@
+-module(printserver).
+-compile(export_all).
