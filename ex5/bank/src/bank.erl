@@ -12,7 +12,7 @@
 ]).
 
 -export([
-    start/1,
+    start_link/1,
     stop/0
 ]).
 
@@ -51,6 +51,9 @@ handle_call(_Pattern, From, State) ->
     io:format("Received bad call from: ~p~n", [From]),
     {noreply, State}.
 
+handle_cast({fail}, State) ->
+    2/0;
+
 handle_cast(_Pattern, State) ->
     io:format("Received bad cast"),
     {noreply, State}.
@@ -63,11 +66,8 @@ code_change(_OldVersion, State, _Extra) ->
     {ok, State}.
 
 
-
-
-start([]) ->
-    {ok, Pid} = gen_server:start_link({local, ?MODULE}, ?MODULE, [], []),
-    Pid.
+start_link([]) ->
+    gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 
 stop() ->
     gen_server:stop(?MODULE).

@@ -6,7 +6,8 @@
     deposit/2,
     transfer/3,
     balance/1,
-    information/0
+    information/0,
+    fail/0
 ]).
 
 -define(SERVERNAME, bank).
@@ -28,3 +29,7 @@ balance(AccountNumber) ->
 
 information() ->
     gen_server:call(?SERVERNAME, {info}).
+
+
+fail() ->
+    gen_server:cast(?SERVERNAME, {fail}).
