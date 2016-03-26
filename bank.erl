@@ -108,6 +108,3 @@ balance(Accounts, AccountNumber) ->
         false -> 0;
         {AccountNumber, Amount} -> Amount
     end.
-
-
-
