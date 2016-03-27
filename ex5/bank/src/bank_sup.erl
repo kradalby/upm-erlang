@@ -10,10 +10,10 @@ start_link() ->
 init(_) ->
     {ok, {{one_for_one, 5, 60},
         [{bank_instance,
-            {bank, start_link, [[]]},
+            {bank_serv, start_link, [[]]},
             permanent,
             5000,
             worker,
-            [bank]}
+            [bank_serv]}
         ]}
     }.
