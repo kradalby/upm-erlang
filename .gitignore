@@ -1,4 +1,7 @@
 
+.eqc-info
+*.eqc
+
 # Created by https://www.gitignore.io/api/erlang,vim,osx,intellij,linux
 
 ### Erlang ###
