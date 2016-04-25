@@ -31,6 +31,7 @@ transfer(Bank, FromAccount, ToAccount, Amount) ->
     Bank ! {transfer, FromAccount, ToAccount, Amount, self()}.
 
 get_balance(Bank, AccountNumber) ->
+
     Bank ! {balance, AccountNumber, self()}.
 
 account_information(Bank) ->

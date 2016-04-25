@@ -33,25 +33,25 @@ prop_fib2() ->
             end).
 
 prop_sum() ->
-    ?FORALL({List}, {list(int())}, 
+    ?FORALL({List}, {list(int())},
             lists:sum(List) == ex1:sum(List)).
 
 prop_member() ->
-    ?FORALL({Element, List}, {int(), list(int())}, 
+    ?FORALL({Element, List}, {int(), list(int())},
             lists:member(Element, List) == ex1:member(Element, List)).
 
 prop_insert() ->
-    ?FORALL({Element, List}, {int(), list(int())}, 
+    ?FORALL({Element, List}, {int(), list(int())},
             lists:sort(List ++ [Element]) == ex1:insert(Element, lists:sort(List))).
 
 prop_mergesort() ->
-    ?FORALL({List}, {list(int())}, 
+    ?FORALL({List}, {list(int())},
             lists:sort(List) == ex1:mergesort(List)).
 
 prop_quicksort() ->
-    ?FORALL({List}, {list(int())}, 
+    ?FORALL({List}, {list(int())},
             lists:sort(List) == ex1:quicksort(List)).
 
 prop_quicksort_lc() ->
-    ?FORALL({List}, {list(int())}, 
+    ?FORALL({List}, {list(int())},
             lists:sort(List) == ex1:quicksort_lc(List)).
