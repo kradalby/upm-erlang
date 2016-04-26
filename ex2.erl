@@ -81,5 +81,14 @@ find(Pred, {node, Key, Left, Right}) ->
         false -> find(Pred, Left), find(Pred, Right)
     end.
 
-
+find2(_, void) ->
+    false;
+find2(Pred, {node, Value, Left, Right}) ->
+    case Pred(Value) of
+        true -> {ok, Value};
+        false -> case find2(Pred, Left) of
+                     false -> find2(Pred, Right);
+                     {ok, T} -> {ok, T}
+                end
+    end.
 

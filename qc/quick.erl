@@ -7,14 +7,32 @@
 
 
 main(_) ->
+    io:format("~nRunning: fib~n"),
     eqc:quickcheck(prop_fib()),
+    io:format("~nRunning: fib2~n"),
     eqc:quickcheck(prop_fib2()),
+    io:format("~nRunning: sum~n"),
     eqc:quickcheck(prop_sum()),
+    io:format("~nRunning: member~n"),
     eqc:quickcheck(prop_member()),
+    io:format("~nRunning: insert~n"),
     eqc:quickcheck(prop_insert()),
+    io:format("~nRunning: mergesort~n"),
     eqc:quickcheck(prop_mergesort()),
+    io:format("~nRunning: quicksort~n"),
     eqc:quickcheck(prop_quicksort()),
-    eqc:quickcheck(prop_quicksort_lc()).
+    io:format("~nRunning: quicksort_idempotent~n"),
+    eqc:quickcheck(prop_quicksort_idempotent()),
+    io:format("~nRunning: quicksort_lc~n"),
+    eqc:quickcheck(prop_quicksort_lc()),
+    io:format("~nRunning: quicksort_min~n"),
+    eqc:quickcheck(prop_quicksort_min()),
+    io:format("~nRunning: quicksort_max~n"),
+    eqc:quickcheck(prop_quicksort_max()),
+    io:format("~nRunning: map~n"),
+    eqc:quickcheck(prop_map()),
+
+    eqc:sample(tree()).
 
 prop_fib() ->
     ?FORALL({N}, {int()},
@@ -52,6 +70,60 @@ prop_quicksort() ->
     ?FORALL({List}, {list(int())},
             lists:sort(List) == ex1:quicksort(List)).
 
+prop_quicksort_idempotent() ->
+    ?FORALL({List}, {list(int())},
+            ex1:quicksort(ex1:quicksort(List)) == ex1:quicksort(List)).
+
 prop_quicksort_lc() ->
     ?FORALL({List}, {list(int())},
             lists:sort(List) == ex1:quicksort_lc(List)).
+
+prop_quicksort_min() ->
+    ?FORALL({List}, {list(int())},
+            try
+                begin
+                    Min = lists:min(List),
+                    [H|_] = ex1:quicksort(List),
+                    H == Min
+                end
+            catch
+                error:_ ->
+                    length(List) == 0
+            end).
+
+prop_quicksort_max() ->
+    ?FORALL({List}, {list(int())},
+            try
+                begin
+                    Max = lists:max(List),
+                    [H|_] = lists:reverse(ex1:quicksort(List)),
+                    H == Max
+                end
+            catch
+                error:_ ->
+                    length(List) == 0
+            end).
+
+prop_map() ->
+    ?FORALL({List}, {list(int())},
+           begin
+                Fun = fun(X) -> X*2 end,
+                NewList = ex2:map(Fun, List),
+                SumList = lists:sum(List) * 2,
+                SumNewList = lists:sum(NewList),
+                SumList == SumNewList
+            end).
+
+tree() ->
+    frequency([
+           {100000, {node, int(), void, void}},
+           {1, {node, int(), tree(), tree()}},
+           {2, {node, int(), void, tree()}},
+           {2, {node, int(), tree(), void}}
+          ]).
+
+prop_tree_find2() ->
+    ?FORALL({Tree}, {},
+           begin
+               io:format("derp")
+           end).
