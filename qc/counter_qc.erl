@@ -9,7 +9,7 @@ initial_state() ->
     [].
 
 new_pre(State) ->
-    length(State) < 1.
+    length(State) < 3.
 
 new_args(_State) ->
     [int()].
@@ -114,7 +114,7 @@ dec(Counter) ->
 dec_next(State, _OldValue, [Counter]) ->
     {_Pid, Value} = lists:keyfind(Counter, 1, State),
     lists:keyreplace(Counter, 1, State, {Counter, Value - 1}).
-   
+
 
 sample() ->
   eqc_gen:sample(eqc_statem:commands(?MODULE)).

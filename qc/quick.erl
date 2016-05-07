@@ -105,11 +105,11 @@ prop_quicksort_max() ->
             end).
 
 prop_map() ->
-    ?FORALL({List}, {list(int())},
+    ?FORALL({List, Int}, {list(int()), int()},
            begin
-                Fun = fun(X) -> X*2 end,
+                Fun = fun(X) -> X*Int end,
                 NewList = ex2:map(Fun, List),
-                SumList = lists:sum(List) * 2,
+                SumList = lists:sum(List) * Int,
                 SumNewList = lists:sum(NewList),
                 SumList == SumNewList
             end).
