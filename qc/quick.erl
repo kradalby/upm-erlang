@@ -1,10 +1,7 @@
-#!/usr/bin/env escript
-%% -*- erlang -*-
-%%! -smp enable -sname factorial -mnesia debug verbose
+Eval: 
 
-% -mode(compile).
--include_lib("eqc/include/eqc.hrl").
 
+<<<<<<< Updated upstream
 
 main(_) ->
     io:format("~nRunning: fib~n"),
@@ -127,3 +124,5 @@ prop_tree_find2() ->
            begin
                io:format("derp")
            end).
+=======
+>>>>>>> Stashed changes
